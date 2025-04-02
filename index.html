@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ru-RU">
+<head>
+    <meta charset="UTF-8" />
+    <title>Калькулятор</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <main>
+        <h2 class="title">Калькулятор</h2>
+        <section class="calculator-section">
+            <div class="col">
+                <label class="first-number-label" for="first-number-input">Первое число:</label>
+                <input type="number" id="first-number-input">
+            </div>
+            <div class="col col-equals">
+                <select id="operation-select">
+                    <option value="add">+</option>
+                    <option value="subtract">-</option>
+                    <option value="multiply">×</option>
+                    <option value="divide">∶</option>
+                    <option value="power">^</option>
+                    <option value="square-root">√</option>
+                </select>
+            </div>
+            <div class="col">
+                <label class="second-number-label" for="second-number-input">Второе число:</label>
+                <input type="number" id="second-number-input">
+            </div>
+            <div class="col col-equals">
+                <button type="button" id="calculate-button">=</button>
+            </div>
+            <div class="col">
+                <label class="answer-label" for="answer-input">Ответ:</label>
+                <input class="input-readonly" type="text" id="answer-input" readonly>
+            </div>
+        </section>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
