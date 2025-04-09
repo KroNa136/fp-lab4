@@ -17,7 +17,7 @@ var binaryOperations = {
         { name: "subtract", execute: subtract },
         { name: "multiply", execute: multiply },
         { name: "divide", execute: divide },
-        { name: "power", execute: power },
+        { name: "power", execute: power }
     ]
 };
 var findOperation = function (predicate) { return function (operationCollection) {
@@ -30,6 +30,12 @@ var findUnaryOperationByName = function (name) { return findOperationByName(name
 var findBinaryOperationByName = function (name) { return findOperationByName(name)(binaryOperations); };
 var isUnaryOperation = function (name) { return typeof findUnaryOperationByName(name) !== "undefined"; };
 var isBinaryOperation = function (name) { return typeof findBinaryOperationByName(name) !== "undefined"; };
+var numberToString = function (x) {
+    return isNaN(x) ? "не число" :
+        x == Number.POSITIVE_INFINITY ? '∞' :
+            x == Number.NEGATIVE_INFINITY ? "-∞" :
+                x.toString();
+};
 var firstNumberInput = document.getElementById("first-number-input");
 var operationSelect = document.getElementById("operation-select");
 var secondNumberInput = document.getElementById("second-number-input");
@@ -54,8 +60,8 @@ if (firstNumberInput instanceof HTMLInputElement &&
         var firstNumber = Number(firstNumberInput.value);
         var secondNumber = Number(secondNumberInput.value);
         var operationName = operationSelect.value;
-        answerInput.value = isUnaryOperation(operationName) ? findUnaryOperationByName(operationName).execute(secondNumber).toString() :
-            isBinaryOperation(operationName) ? findBinaryOperationByName(operationName).execute(firstNumber)(secondNumber).toString() :
+        answerInput.value = isUnaryOperation(operationName) ? numberToString(findUnaryOperationByName(operationName).execute(secondNumber)) :
+            isBinaryOperation(operationName) ? numberToString(findBinaryOperationByName(operationName).execute(firstNumber)(secondNumber)) :
                 "Операция не распознана";
     };
 }

@@ -13,7 +13,7 @@ interface Operation<T> {
 };
 
 interface OperationCollection<T> {
-    items: Operation<T>[],
+    items: Operation<T>[]
 };
 
 const unaryOperations: OperationCollection<(x: number) => number> = {
@@ -28,7 +28,7 @@ const binaryOperations: OperationCollection<(x: number) => (y: number) => number
         { name: "subtract", execute: subtract },
         { name: "multiply", execute: multiply },
         { name: "divide", execute: divide },
-        { name: "power", execute: power },
+        { name: "power", execute: power }
     ]
 };
 
@@ -45,6 +45,14 @@ const findBinaryOperationByName = (name: string) => findOperationByName(name)(bi
 
 const isUnaryOperation = (name: string): boolean => typeof findUnaryOperationByName(name) !== "undefined";
 const isBinaryOperation = (name: string): boolean => typeof findBinaryOperationByName(name) !== "undefined";
+
+// Обработка значений, возвращаемых из операций
+
+const numberToString = (x: number): string =>
+    isNaN(x) ? "не число" :
+    x == Number.POSITIVE_INFINITY ? '∞' :
+    x == Number.NEGATIVE_INFINITY ? "-∞" :
+    x.toString();
 
 // Получение элементов интерфейса
 
@@ -81,8 +89,8 @@ if (firstNumberInput instanceof HTMLInputElement &&
         const secondNumber: number = Number(secondNumberInput.value);
         const operationName: string = operationSelect.value;
 
-        answerInput.value = isUnaryOperation(operationName) ? findUnaryOperationByName(operationName).execute(secondNumber).toString() :
-                            isBinaryOperation(operationName) ? findBinaryOperationByName(operationName).execute(firstNumber)(secondNumber).toString() :
+        answerInput.value = isUnaryOperation(operationName) ? numberToString(findUnaryOperationByName(operationName).execute(secondNumber)) :
+                            isBinaryOperation(operationName) ? numberToString(findBinaryOperationByName(operationName).execute(firstNumber)(secondNumber)) :
                             "Операция не распознана";
     };
 }
