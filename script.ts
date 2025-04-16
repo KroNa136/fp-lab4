@@ -12,32 +12,24 @@ interface Operation<T> {
     execute: T
 };
 
-interface OperationCollection<T> {
-    items: Operation<T>[]
-};
+const unaryOperations: Operation<(x: number) => number>[] = [
+    { name: "square-root", execute: squareRoot }
+];
 
-const unaryOperations: OperationCollection<(x: number) => number> = {
-    items: [
-        { name: "square-root", execute: squareRoot }
-    ]
-};
-
-const binaryOperations: OperationCollection<(x: number) => (y: number) => number> = {
-    items: [
-        { name: "add", execute: add },
-        { name: "subtract", execute: subtract },
-        { name: "multiply", execute: multiply },
-        { name: "divide", execute: divide },
-        { name: "power", execute: power }
-    ]
-};
+const binaryOperations: Operation<(x: number) => (y: number) => number>[] = [
+    { name: "add", execute: add },
+    { name: "subtract", execute: subtract },
+    { name: "multiply", execute: multiply },
+    { name: "divide", execute: divide },
+    { name: "power", execute: power }
+];
 
 // Получение и проверка существования операций по названию
 
-const findOperation = <T>(predicate: (value: Operation<T>) => boolean) => (operationCollection: OperationCollection<T>): Operation<T> | undefined =>
-    operationCollection.items.find(predicate);
+const findOperation = <T>(predicate: (value: Operation<T>) => boolean) => (collection: Operation<T>[]): Operation<T> | undefined =>
+    collection.find(predicate);
 
-const findOperationByName = (name: string): <T>(operationCollection: OperationCollection<T>) => Operation<T> | undefined =>
+const findOperationByName = (name: string): <T>(collection: Operation<T>[]) => Operation<T> | undefined =>
     findOperation((operation) => operation.name === name);
 
 const findUnaryOperationByName = (name: string) => findOperationByName(name)(unaryOperations);

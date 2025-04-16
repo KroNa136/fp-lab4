@@ -5,23 +5,18 @@ var divide = function (x) { return function (y) { return x / y; }; };
 var power = function (x) { return function (y) { return Math.pow(x, y); }; };
 var squareRoot = function (x) { return Math.sqrt(x); };
 ;
-;
-var unaryOperations = {
-    items: [
-        { name: "square-root", execute: squareRoot }
-    ]
-};
-var binaryOperations = {
-    items: [
-        { name: "add", execute: add },
-        { name: "subtract", execute: subtract },
-        { name: "multiply", execute: multiply },
-        { name: "divide", execute: divide },
-        { name: "power", execute: power }
-    ]
-};
-var findOperation = function (predicate) { return function (operationCollection) {
-    return operationCollection.items.find(predicate);
+var unaryOperations = [
+    { name: "square-root", execute: squareRoot }
+];
+var binaryOperations = [
+    { name: "add", execute: add },
+    { name: "subtract", execute: subtract },
+    { name: "multiply", execute: multiply },
+    { name: "divide", execute: divide },
+    { name: "power", execute: power }
+];
+var findOperation = function (predicate) { return function (collection) {
+    return collection.find(predicate);
 }; };
 var findOperationByName = function (name) {
     return findOperation(function (operation) { return operation.name === name; });
